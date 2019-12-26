@@ -34,8 +34,8 @@ class Board
     until self.cups[start_pos].empty?
       pos += 1
       pos = 0 if pos >= 14
-      if (pos == 6 && (current_player_name != self.plyr1)) ||
-        (pos == 13 && (current_player_name != self.plyr2))
+      if (pos == 6 && current_player_name != self.plyr1) ||
+        (pos == 13 && current_player_name != self.plyr2)
         next
       end
       self.cups[pos] << self.cups[start_pos].shift
@@ -46,12 +46,13 @@ class Board
 
   def next_turn(last_cup, name)
     # helper method to determine whether #make_move returns :switch, :prompt, or ending_cup_idx
+    # debugger
     if last_cup == 13 && name == self.plyr2 || 
       last_cup == 6 && name == self.plyr1
       return :prompt
-    elsif self.cups[last_cup].empty?
+    elsif self.cups[last_cup].length <= 1
       return :switch
-    else
+    else 
       last_cup
     end
   end
@@ -65,8 +66,18 @@ class Board
   end
 
   def one_side_empty?
+    (0..5).all? { |cup| self.cups[cup].empty? } ||
+    (7..12).all? { |cup| self.cups[cup].empty? }
   end
 
   def winner
+    case self.cups[6] <=> self.cups[13]
+    when -1
+      return self.plyr2
+    when 0
+      return :draw
+    when 1
+      return self.plyr1
+    end
   end
 end
