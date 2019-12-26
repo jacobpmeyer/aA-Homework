@@ -30,23 +30,30 @@ class Board
   end
 
   def make_move(start_pos, current_player_name)
-    # hand = []
-    # # debugger
-    # hand << self.cups[start_pos].shift until self.cups[start_pos].empty? 
     pos = start_pos
     until self.cups[start_pos].empty?
       pos += 1
-      pos = -1 if pos >= 14
-      if (pos == 6 && current_player_name != self.plyr1) ||
-        (pos == 13 && current_player_name != self.plyr2)
+      pos = 0 if pos >= 14
+      if (pos == 6 && (current_player_name != self.plyr1)) ||
+        (pos == 13 && (current_player_name != self.plyr2))
         next
       end
       self.cups[pos] << self.cups[start_pos].shift
     end
+    self.render
+    self.next_turn(pos, current_player_name)
   end
 
-  def next_turn(ending_cup_idx)
+  def next_turn(last_cup, name)
     # helper method to determine whether #make_move returns :switch, :prompt, or ending_cup_idx
+    if last_cup == 13 && name == self.plyr2 || 
+      last_cup == 6 && name == self.plyr1
+      return :prompt
+    elsif self.cups[last_cup].empty?
+      return :switch
+    else
+      last_cup
+    end
   end
 
   def render
