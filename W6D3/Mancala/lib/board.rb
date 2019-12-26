@@ -1,17 +1,48 @@
+require "byebug"
+
 class Board
   attr_accessor :cups
+  attr_reader :plyr1, :plyr2
 
-  def initialize(name1, name2)
+  def initialize(name1, name2) 
+    @plyr1 = name1
+    @plyr2 = name2
+    @cups = Array.new(14) { Array.new }
+    self.place_stones
   end
 
   def place_stones
     # helper method to #initialize every non-store cup with four stones each
+    self.cups.each_with_index do |cup, i|
+      unless i == 6 || i == 13
+        4.times { cup << :stone }
+      end
+    end
   end
 
   def valid_move?(start_pos)
+    unless (0..13).include?(start_pos)
+      raise 'Invalid starting cup'
+    end
+    if self.cups[start_pos].empty?
+      raise "Starting cup is empty"
+    end
   end
 
   def make_move(start_pos, current_player_name)
+    # hand = []
+    # # debugger
+    # hand << self.cups[start_pos].shift until self.cups[start_pos].empty? 
+    pos = start_pos
+    until self.cups[start_pos].empty?
+      pos += 1
+      pos = -1 if pos >= 14
+      if (pos == 6 && current_player_name != self.plyr1) ||
+        (pos == 13 && current_player_name != self.plyr2)
+        next
+      end
+      self.cups[pos] << self.cups[start_pos].shift
+    end
   end
 
   def next_turn(ending_cup_idx)
