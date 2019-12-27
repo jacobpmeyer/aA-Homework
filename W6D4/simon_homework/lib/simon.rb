@@ -10,7 +10,7 @@ class Simon
   end
 
   def add_random_color
-    
+    self.seq << COLORS.sample
   end
 
   def game_over_message
