@@ -1,3 +1,6 @@
+require 'byebug'
+
+
 class Simon
   COLORS = %w(red blue green yellow)
 
@@ -18,7 +21,11 @@ class Simon
   end
 
   def play
-
+    until self.game_over
+      self.take_turn
+    end
+    self.game_over_message
+    self.reset_game
   end
 
   def require_sequence
@@ -34,11 +41,16 @@ class Simon
   end
 
   def show_sequence
-
+    self.add_random_color
   end
 
   def take_turn
-
+    unless self.game_over
+      debugger
+      self.show_sequence
+      self.require_sequence
+      self.round_success_message
+    end
   end
 
 end
