@@ -9,15 +9,15 @@ class Simon
     @seq = []
   end
 
+  def add_random_color
+    
+  end
+
+  def game_over_message
+
+  end
+
   def play
-
-  end
-
-  def take_turn
-
-  end
-
-  def show_sequence
 
   end
 
@@ -25,7 +25,7 @@ class Simon
 
   end
 
-  def add_random_color
+  def reset_game
 
   end
 
@@ -33,11 +33,12 @@ class Simon
 
   end
 
-  def game_over_message
+  def show_sequence
 
   end
 
-  def reset_game
+  def take_turn
 
   end
+
 end
