@@ -33,7 +33,9 @@ class Simon
   end
 
   def reset_game
-
+    self.seq = []
+    self.sequence_length = 1
+    self.game_over = false
   end
 
   def round_success_message
@@ -46,10 +48,11 @@ class Simon
 
   def take_turn
     unless self.game_over
-      debugger
+      # debugger
       self.show_sequence
       self.require_sequence
       self.round_success_message
+      self.sequence_length += 1
     end
   end
 
