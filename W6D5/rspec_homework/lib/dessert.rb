@@ -7,7 +7,6 @@ require 'active_support/inflector'
 #   'fish'.pluralize    # => 'fish'
 #
 # See https://api.rubyonrails.org/classes/ActiveSupport/Inflector.html#method-i-pluralize
-
 class Dessert
   attr_reader :type, :quantity, :ingredients, :temp
 
