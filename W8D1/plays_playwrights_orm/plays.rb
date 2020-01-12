@@ -15,7 +15,7 @@ class Play
   attr_accessor :id, :title, :year, :playwright_id
 
   def self.find_by_title(title)
-    PlayDBConnection.instance.execute(<<-SQL, @title)
+    data = PlayDBConnection.instance.execute(<<-SQL, title)
       SELECT
         *
       FROM
@@ -23,17 +23,19 @@ class Play
       WHERE
         plays.title = ?
     SQL
+    data.map { |datum| Play.new(datum) }
   end
 
   def self.find_by_playwright(name)
-    PlayDBConnection.instance.execute(<<-SQL, @name)
+    data = PlayDBConnection.instance.execute(<<-SQL, name)
       SELECT
         *
       FROM
         plays
       WHERE
-        plays.name = ?
+        playwright_id = (SELECT playwrights.id FROM playwrights WHERE playwrights.name = ?)
     SQL
+    data.map { |datum| Play.new(datum) }
   end
 
   def self.all
@@ -72,30 +74,63 @@ class Play
   end
 end
 
-class playwright_id
+class Playwright
+  attr_accessor :name, :birth_year, :id
 
   def self.all
-
+    data = PlayDBConnection.instance.execute("SELECT * FROM playwrights")
+    data.map { |datum| Playwright.new(datum) }
   end
 
   def self.find_by_name(name)
-
+    data = PlayDBConnection.instance.execute(<<-SQL, @name)
+      SELECT
+        *
+      FROM
+        playwrights
+      WHERE
+        playwrights.name = ?
+    SQL
   end
 
-  def initialize
-
+  def initialize(options)
+    @id = options['id']
+    @name = options['name']
+    @birth_year = options['birth_year']
   end
 
   def create
-
+    raise 'This playwright is already in the database' if self.id
+    PlayDBConnection.instance.execute(<<-SQL, self.name, self.birth_year)
+      INSERT INTO
+        playwrights(name, birth_year)
+      VALUES
+        (?, ?)
+    SQL
+    self.id = PlayDBConnection.instance.last_insert_row_id
   end
 
   def update
-
+    raise 'This playwright does not yet exist in our database' unless self.id
+    PlayDBConnection.instance.execute(<<-SQL, self.name, self.birth_year, self.id)
+      UPDATE
+        playwrights
+      SET
+        name = ?, birth_year = ?
+      WHERE
+        id = ?
+    SQL
   end
 
   def get_plays
-
+    PlayDBConnection.instance.execute(<<-SQL, self.id)
+      SELECT
+        *
+      FROM
+        plays
+      WHERE
+        playwright_id = ?
+    SQL
   end
   
 end
