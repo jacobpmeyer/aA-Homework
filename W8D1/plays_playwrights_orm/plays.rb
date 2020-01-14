@@ -83,7 +83,7 @@ class Playwright
   end
 
   def self.find_by_name(name)
-    data = PlayDBConnection.instance.execute(<<-SQL, @name)
+    data = PlayDBConnection.instance.execute(<<-SQL, name)
       SELECT
         *
       FROM
