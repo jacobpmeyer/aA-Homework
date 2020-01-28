@@ -1,25 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
   describe "validations" do
     it { should validate_presence_of(:email) }
     it { should validate_presence_of(:password_digest) }
     it { should validate_presence_of(:email) }
-    it { should validate_length_of(:password, minimum: 10, on: :create)}
+    it { should validate_length_of(:password). is_at_least(8). on(:create) }
   end
  
   subject(:user) { User.create!(email: "mashu@appacademy.io", password: "hunter123") }
 
   describe "#is_password?" do
     it "should check if the given password is the user's password" do
-      expect(user.is_password?("hunter2")).to be(true)
+      expect(user.is_password?("hunter123")).to be(true)
     end
   end
 
   describe "::find_by_credentials" do
     it "should match a user to the credentials provieded" do
-      user_var = User.find_by_credentials("mashu@appacademy.io", 'hunter2')
+      user = User.create!(email: "d@d.com", password: "hunter123")
+      user_var = User.find_by_credentials("d@d.com", "hunter123")
       expect(user_var).to eq(user)
     end
   end
