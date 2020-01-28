@@ -5441,3 +5441,7 @@ NoMethodError - undefined method `name' for nil:NilClass:
   app/controllers/albums_controller.rb:13:in `show'
 
 Started POST "/__better_errors/2f5d6f25f2d1c01e/variables" for ::1 at 2020-01-27 18:33:31 -0600
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE DATABASE "music_app_development" ENCODING = 'unicode'[0m
+  ↳ bin/rails:9
+  [1m[35m (234.9ms)[0m  [1m[35mCREATE DATABASE "music_db_test" ENCODING = 'unicode'[0m
+  ↳ bin/rails:9
