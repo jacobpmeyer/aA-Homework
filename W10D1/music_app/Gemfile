@@ -52,6 +52,8 @@ group :development do
   gem 'annotate'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'spring-commands-rspec'
+  gem 'guard-rspec'
 end
 
 group :test do
