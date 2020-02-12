@@ -59,7 +59,7 @@ View.prototype.exercise5 = function () {
 
   //hint: checkout the addRow function at the bottom of the file: we set the
   //  'data-pos' of every square
-  $(".square").on("click", event => {
+  $(".square").on("click", (event) => {
       alert($(event.currentTarget).attr("data-pos"))
   })
   //your code here!
@@ -90,8 +90,17 @@ View.prototype.exercise7 = function(){
   //You should push the button for exercise 6 first to try it on the
   //rainbow.
  
+  // $("#easel").on('mouseenter', '.square', event => {
+  //   const $sqr = $(event.currentTarget)
+  //   console.log($sqr.css('background-color'))
+  // })
   
   //your code here!
+
+  $('#easel').on("mouseenter", ".square", e => {
+    const $sq = $(e.currentTarget);
+    console.log($sq.css("background-color"));
+  });
 };
 
 
