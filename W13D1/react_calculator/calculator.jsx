@@ -1,57 +1,72 @@
-import React from "react";
+import React from 'react';
 
 class Calculator extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = { result: 0, num1: "", num2: "" }
-    this.setNum1 = this.setNum1.bind(this)
-    this.setNum2 = this.setNum2.bind(this)
-    this.setMath = this.setMath.bind(this)
+    this.setNum1 = this.setNum1.bind(this);
+    this.setNum2 = this.setNum2.bind(this);
+    this.add = this.add.bind(this);
+    this.subtract = this.subtract.bind(this);
+    this.multiply = this.multiply.bind(this);
+    this.divide = this.divide.bind(this);
+    this.clear = this.clear.bind(this)
   }
 
   setNum1(e) {
-    e.preventDefault()
-    val = e.currentTarget.value.parseInt()
-    this.setState({ num1: val })
+    const num1 = e.target.value ? parseInt(e.target.value) : "";
+    this.setState({ num1 });
   }
 
   setNum2(e) {
-    e.preventDefault()
-    val = e.currentTarget.value.parseInt()
-    this.setState({ num2: val })
+    const num2 = e.target.value ? parseInt(e.target.value) : "";
+    this.setState({ num2 });
   }
 
-  setMath(e) {
+  add(e) {
     e.preventDefault()
-    op = e.currentTarget.value
-    if (op === "+") {
-      this.setState({ result: num1 + num2 })
-    } else if (op === "-") {
-      this.setState({ result: num1 - num2 })
-    } else if (op === "*") {
-      this.setState({ result: num1 * num2 })
-    } else if (op === "/") {
-      this.setState({ result: num1 / num2 })
-    }
+    const result = this.state.num1 + this.state.num2
+    this.setState({ result })
   }
 
-  myclear() {
-    this.setState({ num1: "", num2: "" })
+  subtract(e) {
+    e.preventDefault()
+    const result = this.state.num1 - this.state.num2
+    this.setState({ result })
   }
+
+  multiply(e) {
+    e.preventDefault()
+    const result = this.state.num1 * this.state.num2
+    this.setState({ result })
+  }
+
+  divide(e) {
+    e.preventDefault()
+    const result = this.state.num1 / this.state.num2
+    this.setState({ result })
+  }
+
+  clear(e) {
+    e.preventDefault()
+    this.setState({ result: 0, num1: "", num2: "" })
+  }
+
+  
 
   render() {
+    const { num1, num2, result } = this.state;
     return (
       <div>
-        <h1>{this.state.result}</h1>
-
-        <input onChange={this.setNum1} value={this.state.num1}/>
-        <input onChange={this.setNum2} value={this.state.num2}/>
-        <button onClick={ this.myclear }>Clear</button>
-        <br />
-        <button onClick={ this.setMath } value={"+"}>+</button>
-        <button onClick={ this.setMath } value={"-"}>-</button>
-        <button onClick={ this.setMath } value={"*"}>*</button>
-        <button onClick={ this.setMath } value={"/"}>/</button>
+        <h1>{result}</h1>
+        <input onChange={this.setNum1} value={num1} />
+        <input onChange={this.setNum2} value={num2} />
+        <button onClick={this.clear}>Clear</button>
+        <br/>
+        <button onClick={this.add}>+</button>
+        <button onClick={this.subtract}>-</button>
+        <button onClick={this.multiply}>*</button>
+        <button onClick={this.divide}>/</button>
       </div>
     );
   }
