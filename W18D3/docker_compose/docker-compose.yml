@@ -1,0 +1,9 @@
+version: "2"
+
+services:
+  nginx:
+    build: 
+      context: .
+    image: jacobmeyer/nginx
+    ports: 
+      - 8000:80
